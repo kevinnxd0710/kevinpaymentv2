@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#07111f">
+  <meta name="description" content="VINTAV Payment Center — personal payment dashboard.">
+  <title>VINTAV Payment — Payment Center</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">V</div>
+        <div><strong>VINTAV</strong><span>PAYMENT</span></div>
+      </div>
+      <nav class="side-nav" aria-label="Navigasi utama">
+        <button class="nav-item active" data-page="home"><span>⌂</span>Overview</button>
+        <button class="nav-item" data-page="payments"><span>▣</span>Payments</button>
+        <button class="nav-item" data-page="qris"><span>⌗</span>QRIS</button>
+        <button class="nav-item" data-page="all"><span>◈</span>All Methods</button>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="mini-status"><i></i><span>Payment Center Online</span></div>
+        <small>VINTAV Payment v2.0</small>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="mobile-menu" id="mobileMenu" aria-label="Buka menu">☰</button>
+        <div class="top-title">
+          <span>Payment Center</span>
+          <small id="pageSubtitle">Your payment hub</small>
+        </div>
+        <div class="top-actions">
+          <button class="icon-btn" id="themeBtn" title="Ganti tema">☼</button>
+          <div class="avatar">K</div>
+        </div>
+      </header>
+
+      <section class="page" id="page-home">
+        <div class="hero">
+          <div>
+            <div class="eyebrow">VINTAV PAYMENT</div>
+            <h1>Simple payment.<br><em>Stronger connection.</em></h1>
+            <p>Akses semua metode pembayaranmu dalam satu tempat.</p>
+          </div>
+          <div class="hero-orb"><span>V</span></div>
+        </div>
+
+        <div class="stats-grid">
+          <article class="stat-card"><span>Total Methods</span><strong id="statTotal">0</strong><small>payment terdaftar</small></article>
+          <article class="stat-card"><span>Available</span><strong id="statAvailable">0</strong><small>siap digunakan</small></article>
+          <article class="stat-card"><span>Unavailable</span><strong id="statUnavailable">0</strong><small>belum tersedia</small></article>
+          <article class="stat-card accent"><span>QRIS</span><strong>02</strong><small>QR code aktif</small></article>
+        </div>
+
+        <div class="section-head">
+          <div><span class="eyebrow">QUICK ACCESS</span><h2>Payment utama</h2></div>
+          <button class="text-btn" data-page="payments">Lihat semua →</button>
+        </div>
+        <div class="payment-grid" id="quickGrid"></div>
+
+        <div class="section-head">
+          <div><span class="eyebrow">FEATURED</span><h2>QRIS cepat</h2></div>
+          <button class="text-btn" data-page="qris">Buka QRIS →</button>
+        </div>
+        <div class="qris-preview-grid" id="qrisPreview"></div>
+      </section>
+
+      <section class="page hidden" id="page-payments">
+        <div class="page-heading">
+          <div><span class="eyebrow">PAYMENT METHODS</span><h1>Semua Payment</h1><p>Data dikelola dari <code>data/payments.js</code>.</p></div>
+        </div>
+        <div class="toolbar">
+          <div class="search"><span>⌕</span><input id="searchInput" placeholder="Cari bank, e-wallet, atau payment..."></div>
+          <div class="filters" id="filters">
+            <button class="filter active" data-filter="all">Semua</button>
+            <button class="filter" data-filter="bank">Bank</button>
+            <button class="filter" data-filter="ewallet">E-Wallet</button>
+          </div>
+        </div>
+        <div class="payment-grid large" id="paymentGrid"></div>
+      </section>
+
+      <section class="page hidden" id="page-qris">
+        <div class="page-heading">
+          <div><span class="eyebrow">QR CODE STANDARD</span><h1>QRIS Payment</h1><p>Satu QRIS untuk semua, lebih praktis.</p></div>
+          <div class="qris-badge">QRIS<br><small>PAYMENT</small></div>
+        </div>
+        <div class="qris-grid" id="qrisGrid"></div>
+        <div class="info-banner"><span>ⓘ</span><div><strong>Tips keamanan</strong><p>Pastikan nama penerima yang muncul di aplikasi pembayaran sesuai sebelum menyelesaikan transaksi.</p></div></div>
+      </section>
+
+      <section class="page hidden" id="page-all">
+        <div class="page-heading">
+          <div><span class="eyebrow">DIRECTORY</span><h1>Payment Directory</h1><p>Daftar lengkap payment yang disiapkan di source code.</p></div>
+        </div>
+        <div class="directory" id="directory"></div>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal hidden" id="qrModal" role="dialog" aria-modal="true">
+    <div class="modal-backdrop" data-close></div>
+    <div class="modal-card qr-modal-card">
+      <button class="modal-close" data-close>×</button>
+      <div class="modal-title"><span class="eyebrow">QRIS</span><h2 id="modalQrName">QRIS</h2></div>
+      <div class="modal-qr"><img id="modalQrImage" alt="QRIS"></div>
+      <div class="modal-meta" id="modalQrMeta"></div>
+      <div class="modal-actions">
+        <button class="primary-btn" id="downloadQr">↓ Download</button>
+        <button class="secondary-btn" id="shareQr">↗ Bagikan</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
